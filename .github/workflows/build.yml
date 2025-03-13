@@ -19,7 +19,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.x'
+        python-version: '3.x'  # Puedes especificar una versión concreta si es necesario
 
     - name: Install dependencies
       run: |
@@ -27,12 +27,16 @@ jobs:
         pip install -r requirements.txt
         pip install pyinstaller
 
+    - name: Clean previous builds
+      run: |
+        rmdir /s /q dist  # Elimina el directorio 'dist' en Windows
+
     - name: Build Executable
       run: |
-        pyinstaller --onefile --name TicketApp src/interfaz.py
+        pyinstaller --onefile --name TicketApp src/interfaz.py  # Verifica que la ruta de tu archivo .py sea correcta
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: TicketApp
-        path: dist/TicketApp.exe
+        path: dist/TicketApp.exe  # Ruta del ejecutable generado
