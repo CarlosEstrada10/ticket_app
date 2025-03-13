@@ -29,7 +29,7 @@ jobs:
 
     - name: Build Executable
       run: |
-        pyinstaller --onefile --name TicketApp src/interfaz_ticket.py
+        pyinstaller --onefile --name TicketApp src/interfaz.py
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
