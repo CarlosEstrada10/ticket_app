@@ -32,7 +32,7 @@ jobs:
         pyinstaller --onefile --name TicketApp src/interfaz_ticket.py
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: TicketApp
         path: dist/TicketApp.exe
