@@ -4,17 +4,11 @@ import subprocess
 from tkinter import Tk, Button, Label, filedialog
 
 def resource_path(relative_path):
-    """
-    Obtiene la ruta absoluta al recurso.
-    Funciona tanto en desarrollo (cuando ejecutas el script con Python) 
-    como cuando está empaquetado en un ejecutable con PyInstaller.
-    """
+    """ Obtiene la ruta absoluta del recurso, considerando si está empaquetado o no. """
     try:
-        # Si está congelado, sys._MEIPASS existe y es la carpeta temporal donde PyInstaller extrae los archivos.
         base_path = sys._MEIPASS
     except AttributeError:
-        # En modo desarrollo, se usa la carpeta actual.
-        base_path = os.getcwd()
+        base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
 
 def seleccionar_carpeta():
@@ -23,10 +17,8 @@ def seleccionar_carpeta():
 def actualizar_archivos():
     carpeta = seleccionar_carpeta()
     if carpeta:
-        # Obtiene la ruta correcta para actualizar.py
-        actualizar_script = resource_path("src/actualizar.py")
-        # Usa sys.executable para que se ejecute con el intérprete de Python adecuado
-        subprocess.run([sys.executable, actualizar_script, carpeta])
+        script_path = resource_path(os.path.join('src', 'actualizar.py'))
+        subprocess.run([sys.executable, script_path, carpeta])
         label_result.config(text="Actualización completada.")
     else:
         label_result.config(text="No se seleccionó carpeta.")
@@ -34,9 +26,8 @@ def actualizar_archivos():
 def extraer_ticket():
     carpeta = seleccionar_carpeta()
     if carpeta:
-        # Obtiene la ruta correcta para ticket.py
-        ticket_script = resource_path("src/ticket.py")
-        subprocess.run([sys.executable, ticket_script, carpeta])
+        script_path = resource_path(os.path.join('src', 'ticket.py'))
+        subprocess.run([sys.executable, script_path, carpeta])
         label_result.config(text="Ticket generado.")
     else:
         label_result.config(text="No se seleccionó carpeta.")
