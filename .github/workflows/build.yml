@@ -29,8 +29,14 @@ jobs:
 
     - name: Clean previous builds
       run: |
-        Remove-Item -Recurse -Force dist  # Elimina el directorio 'dist' y su contenido
+        if (Test-Path dist) { Remove-Item -Recurse -Force dist }  # Elimina el directorio 'dist' solo si existe
 
     - name: Build Executable
       run: |
-        pyinstaller --onefile --name TicketApp src/interfaz.py  # Verifica que la ruta de tu ar
+        pyinstaller --onefile --name TicketApp src/interfaz.py  # Verifica que la ruta de tu archivo .py sea correcta
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: TicketApp
+        path: dist/TicketApp.exe  # Ruta del ejecutable generado
