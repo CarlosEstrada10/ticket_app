@@ -10,12 +10,12 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
-        python-version: '3.9'
+        python-version: '3.x'
 
     - name: Install dependencies
       run: |
@@ -28,7 +28,7 @@ jobs:
         pyinstaller --onefile --name TicketApp --add-data "src/ticket.py;src" --add-data "src/actualizar.py;src" src/interfaz.py
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: TicketApp
         path: dist/TicketApp.exe
